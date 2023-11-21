@@ -1,37 +1,30 @@
-
+// Import required modules
 const express = require("express");
 const app = express();
 
-// load config from env file
-
+// Load configuration from the environment file
 require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 
-//middleware to parse json request body
-
+// Middleware to parse JSON request body
 app.use(express.json());
 
-//import routes for TODO API
-
+// Import routes for the TODO API
 const todoRoutes = require("./routes/todos");
 
-//mount the todo API routes
+// Mount the TODO API routes under the "/api/v1" path
+app.use("/api/v1", todoRoutes);
 
-app.use("/api/v1",todoRoutes);
-
-// start server
-
-app.listen(PORT,()=>{
-    console.log(`Server started Succesfully at ${PORT}`);
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server started successfully at ${PORT}`);
 });
 
-// connedtion to the database
-
+// Connect to the database
 const dbConnect = require("./config/database");
 dbConnect();
 
-//default Route
-
-app.get("/",(req,res)=>{
-    res.send(`<h1> This is HemePage body </h1>`);
-})
+// Default route
+app.get("/", (req, res) => {
+    res.send(`<h1>This is HomePage body</h1>`);
+});
